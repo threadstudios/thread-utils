@@ -1,1 +1,5 @@
-module.export.Model = require('./dist/Model');
+const Model = require('./dist/Model');
+
+module.exports = {
+    Model : Model.default
+}

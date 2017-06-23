@@ -25,7 +25,7 @@ export default class Model {
         return this.id;
     }
     set(data) {
-        if(data.id) {
+        if(data.id !== undefined) {
             this.setId(data.id);
             delete data.id;
         }
@@ -45,7 +45,7 @@ export default class Model {
     get(filter) {
         const desc = this.description;
         let keys = filter ? filter : desc.fields;
-        keys = Array.isArray(keys) ? keys : [keys];
+        if(!Array.isArray(keys)) return this.data[keys];
         return keys.reduce((acc, key) => {
             if(desc.hidden && desc.hidden.includes(key)) return acc;
             acc[key] = this.data[key] ? this.data[key] : null;

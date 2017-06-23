@@ -16,8 +16,7 @@ describe("A data model", () => {
     it("should allow setting of data through set()", () => {
         const user = User.create();
         user.set({email : 'joe.bloggs@example.com'});
-        let { email } = user.get('email')
-        expect(email).toBe('joe.bloggs@example.com');
+        expect(user.get('email')).toBe('joe.bloggs@example.com');
     });
 
     it("should allow me to retrieve data in several ways through get()", () => {
@@ -26,8 +25,8 @@ describe("A data model", () => {
             firstName: 'Paul',
             lastName: 'Westerdale'
         });
-        let { firstName } = user.get('firstName');
-        expect(firstName).toBe('Paul');
+
+        expect(user.get('firstName')).toBe('Paul');
         let { lastName, email } = user.get(['lastName', 'email']);
         expect(lastName).toBe('Westerdale');
         expect(email).toBe('paul@example.com');
