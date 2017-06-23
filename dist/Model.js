@@ -8,39 +8,86 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Model = exports.Model = function () {
+var Model = function () {
     _createClass(Model, null, [{
         key: 'create',
         value: function create(data) {
             var model = new this();
-            model.set(data);
+            if (data) {
+                model.set(data);
+            }
             return model;
         }
     }]);
 
-    function Model() {
+    function Model(child) {
         _classCallCheck(this, Model);
 
-        if (!this.fields) {
+        this.data = {};
+        this.id = false;
+        this.description = {
+            fields: child.fields,
+            hidden: child.hidden
+        };
+        if (!this.description.fields) {
             throw new Error('A model must declare its fields as a static property');
         }
     }
 
     _createClass(Model, [{
-        key: 'set',
-        value: function set(data) {}
+        key: 'setStrict',
+        value: function setStrict(flag) {
+            this.description.strict = flag;
+        }
     }, {
-        key: 'fromData',
-        value: function fromData(data) {
+        key: 'setId',
+        value: function setId(id) {
+            this.id = id;
+        }
+    }, {
+        key: 'getId',
+        value: function getId(id) {
+            return this.id;
+        }
+    }, {
+        key: 'set',
+        value: function set(data) {
             var _this = this;
 
-            Object.keys(data).forEach(function (key) {
-                if (fields.includes(key)) {
-                    _this[key] = data[key];
+            if (data.id) {
+                this.setId(data.id);
+                delete data.id;
+            }
+            var newData = Object.keys(data).reduce(function (acc, passedKey) {
+                if (_this.description.fields.includes(passedKey)) {
+                    acc[passedKey] = data[passedKey];
+                } else {
+                    if (_this.description.strict) {
+                        throw new Error('Attempted to set invalid key ' + passedKey + ' on Model');
+                    }
                 }
-            });
+                return acc;
+            }, {});
+            this.data = Object.assign(this.data, newData);
+            return this;
+        }
+    }, {
+        key: 'get',
+        value: function get(filter) {
+            var _this2 = this;
+
+            var desc = this.description;
+            var keys = filter ? filter : desc.fields;
+            keys = Array.isArray(keys) ? keys : [keys];
+            return keys.reduce(function (acc, key) {
+                if (desc.hidden && desc.hidden.includes(key)) return acc;
+                acc[key] = _this2.data[key] ? _this2.data[key] : null;
+                return acc;
+            }, {});
         }
     }]);
 
     return Model;
 }();
+
+exports.default = Model;

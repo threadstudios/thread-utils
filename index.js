@@ -1,0 +1,1 @@
+module.export.Model = require('./dist/Model');
