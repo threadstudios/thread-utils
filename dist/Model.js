@@ -54,7 +54,7 @@ var Model = function () {
         value: function set(data) {
             var _this = this;
 
-            if (data.id) {
+            if (data.id !== undefined) {
                 this.setId(data.id);
                 delete data.id;
             }
@@ -78,7 +78,7 @@ var Model = function () {
 
             var desc = this.description;
             var keys = filter ? filter : desc.fields;
-            keys = Array.isArray(keys) ? keys : [keys];
+            if (!Array.isArray(keys)) return this.data[keys];
             return keys.reduce(function (acc, key) {
                 if (desc.hidden && desc.hidden.includes(key)) return acc;
                 acc[key] = _this2.data[key] ? _this2.data[key] : null;
