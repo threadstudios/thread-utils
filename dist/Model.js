@@ -56,7 +56,6 @@ var Model = function () {
 
             if (data.id !== undefined) {
                 this.setId(data.id);
-                delete data.id;
             }
             var newData = Object.keys(data).reduce(function (acc, passedKey) {
                 if (_this.description.fields.includes(passedKey)) {

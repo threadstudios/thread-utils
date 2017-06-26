@@ -27,7 +27,6 @@ export default class Model {
     set(data) {
         if(data.id !== undefined) {
             this.setId(data.id);
-            delete data.id;
         }
         const newData = Object.keys(data).reduce((acc, passedKey) => {
             if(this.description.fields.includes(passedKey)){
