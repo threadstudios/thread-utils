@@ -53,4 +53,24 @@ describe("A data model", () => {
         expect(user.get('deleted')).toBe(true);
     })
 
+    it("should take defaults set on the core Model", () => {
+        const user = User.create({
+            email: 'paul@example.com',
+            firstName: 'Paul',
+            lastName: 'Westerdale'
+        });
+
+        expect(user.get('confirmed')).toBe(false);
+
+        const user2 = User.create({
+            email: 'paul2@example.com',
+            firstName: 'Paul',
+            lastName: 'Westerdale',
+            confirmed: true
+        });
+        
+        expect(user2.get('confirmed')).toBe(true);
+
+    })
+
 });

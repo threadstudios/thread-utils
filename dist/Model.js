@@ -13,6 +13,7 @@ var Model = function () {
         key: "create",
         value: function create(data) {
             var model = new this();
+            data = Object.assign({}, this.defaults || {}, data);
             if (data) {
                 model.set(data);
             }
@@ -28,6 +29,7 @@ var Model = function () {
         var fields = child.fields.concat(["deleted"]);
         this.description = {
             fields: fields,
+            defaults: child.defaults || {},
             hidden: child.hidden
         };
         if (!this.description.fields) {

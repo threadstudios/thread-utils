@@ -1,6 +1,7 @@
 export default class Model {
     static create(data) {
         const model = new this();
+        data = Object.assign({}, this.defaults || {}, data);
         if(data) { model.set(data) }
         return model;
     }
@@ -10,6 +11,7 @@ export default class Model {
         const fields = child.fields.concat(["deleted"]);
         this.description = {
             fields : fields,
+            defaults: child.defaults || {},
             hidden : child.hidden
         }
         if(!this.description.fields) {
