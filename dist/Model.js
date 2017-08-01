@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -10,7 +10,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Model = function () {
     _createClass(Model, null, [{
-        key: 'create',
+        key: "create",
         value: function create(data) {
             var model = new this();
             if (data) {
@@ -25,8 +25,9 @@ var Model = function () {
 
         this.data = {};
         this.id = false;
+        var fields = child.fields.concat(["deleted"]);
         this.description = {
-            fields: child.fields,
+            fields: fields,
             hidden: child.hidden
         };
         if (!this.description.fields) {
@@ -35,22 +36,22 @@ var Model = function () {
     }
 
     _createClass(Model, [{
-        key: 'setStrict',
+        key: "setStrict",
         value: function setStrict(flag) {
             this.description.strict = flag;
         }
     }, {
-        key: 'setId',
+        key: "setId",
         value: function setId(id) {
             this.id = id;
         }
     }, {
-        key: 'getId',
+        key: "getId",
         value: function getId(id) {
             return this.id;
         }
     }, {
-        key: 'set',
+        key: "set",
         value: function set(data) {
             var _this = this;
 
@@ -62,7 +63,7 @@ var Model = function () {
                     acc[passedKey] = data[passedKey];
                 } else {
                     if (_this.description.strict) {
-                        throw new Error('Attempted to set invalid key ' + passedKey + ' on Model');
+                        throw new Error("Attempted to set invalid key " + passedKey + " on Model");
                     }
                 }
                 return acc;
@@ -71,7 +72,7 @@ var Model = function () {
             return this;
         }
     }, {
-        key: 'get',
+        key: "get",
         value: function get(filter) {
             var _this2 = this;
 
