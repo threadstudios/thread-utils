@@ -42,4 +42,15 @@ describe("A data model", () => {
         expect(user.getId()).toBe(12);
     });
 
+    it("should have a deleted field from the core Model", () => {
+        const user = User.create({
+            email: 'paul@example.com',
+            firstName: 'Paul',
+            lastName : 'Westerdale',
+            id: 11
+        });
+        user.set({deleted: true});
+        expect(user.get('deleted')).toBe(true);
+    })
+
 });

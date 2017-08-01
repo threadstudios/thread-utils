@@ -7,8 +7,9 @@ export default class Model {
     constructor(child) {
         this.data = {};
         this.id = false;
+        const fields = child.fields.concat(["deleted"]);
         this.description = {
-            fields : child.fields,
+            fields : fields,
             hidden : child.hidden
         }
         if(!this.description.fields) {
